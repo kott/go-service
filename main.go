@@ -17,6 +17,7 @@ func main() {
 	app := gin.New()
 
 	app.Use(middleware.PersistContext())
+	app.Use(middleware.RequestLogger())
 
 	app.GET("/", func(c *gin.Context) {
 		ctx := rcontext.GetReqCtx(c)
