@@ -1,8 +1,6 @@
 package errors
 
 import "fmt"
-import "net/http"
-
 
 const (
 	// InternalServerError ...
