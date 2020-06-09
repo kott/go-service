@@ -1,28 +1,30 @@
 package main
 
 import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"github.com/labstack/gommon/log"
+	"context"
+	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	rcontext "github.com/kott/go-service/context"
+	"github.com/kott/go-service/log"
+	"github.com/kott/go-service/middleware"
 )
 
 func main() {
-	e := echo.New()
 
-	e.Use(middleware.RequestID())
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-	setLogLevel(e.Logger, log.INFO)
-	e.GET("/", func(c echo.Context) error {
-		c.Logger().Info("")
-		return c.JSONPretty(http.StatusOK, struct{Msg string}{Msg: "hello"},"\t")
+	app := gin.New()
+
+	app.Use(middleware.PersistContext())
+
+	app.GET("/", func(c *gin.Context) {
+		ctx := rcontext.GetReqCtx(c)
+		log.Info(ctx, "Info log")
+		c.JSON(http.StatusOK, struct{}{})
 	})
-	e.Logger.Fatal(e.Start(":8080"))
-}
 
-func setLogLevel(logger echo.Logger, lvl log.Lvl) {
-	if l, ok := logger.(*log.Logger); ok {
-		l.SetLevel(lvl)
+	if err := app.Run(fmt.Sprintf("%s:%s", "0.0.0.0", "8080")); err != nil {
+		log.Fatal(context.Background(),"THINGS WENT HORRIBLY WRONG")
 	}
 }
