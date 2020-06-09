@@ -18,6 +18,11 @@ func main() {
 
 	app.Use(middleware.PersistContext())
 	app.Use(middleware.RequestLogger())
+	app.Use(middleware.ForceJSON())
+	app.Use(middleware.Recover())
+
+	app.NoRoute(middleware.NoRoute())
+	app.NoMethod(middleware.NoMethod())
 
 	app.GET("/", func(c *gin.Context) {
 		ctx := rcontext.GetReqCtx(c)
@@ -26,6 +31,6 @@ func main() {
 	})
 
 	if err := app.Run(fmt.Sprintf("%s:%s", "0.0.0.0", "8080")); err != nil {
-		log.Fatal(context.Background(),"THINGS WENT HORRIBLY WRONG")
+		log.Fatal(context.Background(), err.Error())
 	}
 }
