@@ -18,7 +18,7 @@ func GetReqCtx(c *gin.Context) context.Context {
 	return rCtx.(context.Context)
 }
 
-// SetReqCtx sets the context to gin's context
-func SetReqCtx(c *gin.Context, ctx context.Context) {
+// SetReqCtx sets the general context to gin's context
+func SetReqCtx(ctx context.Context, c *gin.Context) {
 	c.Set(ctxKey, ctx)
 }

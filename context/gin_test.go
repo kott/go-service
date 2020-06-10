@@ -19,9 +19,9 @@ func TestGetReqCtx(t *testing.T) {
 }
 
 func TestSetReqCtx(t *testing.T) {
-	ctx := context.WithValue(context.Background(), "some_key", "some_value")
+	ctx := context.WithValue(context.Background(), ctxTest("some_key"), ctxTest("some_value"))
 	gCtx := &gin.Context{}
 	assert.Empty(t, GetReqCtx(gCtx))
-	SetReqCtx(gCtx, ctx)
-	assert.Equal(t,ctx, GetReqCtx(gCtx))
+	SetReqCtx(ctx, gCtx)
+	assert.Equal(t, ctx, GetReqCtx(gCtx))
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/kott/go-service/log"
 )
 
-const ReqIDHeader = "X-Request-Id"
+const reqIDHeader = "X-Request-Id"
 
 // PersistContext sets any values we want persisted throughout the life of a request
 func PersistContext() gin.HandlerFunc {
@@ -20,16 +20,16 @@ func PersistContext() gin.HandlerFunc {
 		ctx := context.Background()
 		ctx = rcontext.SetRequestLogger(ctx, ctxLogger)
 		ctx = rcontext.SetReqID(ctx, reqID)
-		rcontext.SetReqCtx(c, ctx)
+		rcontext.SetReqCtx(ctx, c)
 
-		c.Header(ReqIDHeader, reqID)
+		c.Header(reqIDHeader, reqID)
 		c.Next()
 	}
 }
 
 func currentReqID(c *gin.Context) string {
 	var reqID string
-	if reqID = c.GetHeader(ReqIDHeader); reqID == "" {
+	if reqID = c.GetHeader(reqIDHeader); reqID == "" {
 		reqID = rcontext.GenerateReqID()
 	}
 	return reqID

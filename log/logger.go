@@ -12,7 +12,7 @@ import (
 // New creates a new logger with a few standard options
 func New() *logrus.Logger {
 	logger := logrus.New()
-	logger.SetLevel(logrus.InfoLevel)  // TODO: should set this via config
+	logger.SetLevel(logrus.InfoLevel) // TODO: should set this via config
 	logger.SetOutput(os.Stdout)
 	return logger
 }
@@ -41,6 +41,7 @@ func Error(ctx context.Context, msg string, args ...interface{}) {
 func Fatal(ctx context.Context, msg string, args ...interface{}) {
 	getLogger(ctx).Fatalf(msg, args...)
 }
+
 // Panic wraps logrus Panicf such that logger for the given context
 func Panic(ctx context.Context, msg string, args ...interface{}) {
 	getLogger(ctx).Panicf(msg, args...)

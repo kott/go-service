@@ -9,6 +9,7 @@ import (
 	rcontext "github.com/kott/go-service/context"
 )
 
+// RequestLogger logs before and after an HTTP request
 func RequestLogger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		logger := rcontext.GetRequestLogger(rcontext.GetReqCtx(c))

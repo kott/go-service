@@ -8,7 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestSetGetRequestLogger(t *testing.T) {
 	ctx := context.Background()
 	newLogger := logrus.New().WithField("some_key", "some_value")
